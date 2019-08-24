@@ -7,33 +7,35 @@ router.post('/usuario/:login/solicitacao', async (req, res) => {
     const usuario = req.params.login;
     var success = true;
 
-    var body = {
-        data: '24/08/2019',
-        motivo: 'projeto',
-        veiculo: {}
+    var body = req.body;
+
+    solicitacao = {
+        veiculo: body.veiculo,
+        login: usuario
     };
 
-    await collection.findOne({ data: body.data, local: 'POLIS' }, (err, result) => {
-        solicitacao = {
-            veiculo: body.veiculo,
-            login: usuario
-        };
-        if (result == null) {
-            result = {
-                data: body.data,
-                local: 'POLIS',
-                aprovadas: [solicitacao],
-                pendentes: []
-            }
-        } else if (result.aprovadas.length < 30) {
-            result.aprovadas.push(solicitacao)
-            res.status(200).send('funcionou!');
-        } else {
-            result.pendentes.push(solicitacao);
-            res.status(422).send('fila cheia');
+    var httpStatus = 0;
+    var resultado = await collection.findOne({ data: body.data, local: 'POLIS' });
+
+    if (resultado == null) {
+        resultado = {
+            data: body.data,
+            local: 'POLIS',
+            aprovadas: [solicitacao],
+            pendentes: []
         }
-    collection.update({ data: body.data, local: 'POLIS' }, result, { upsert: true, safe: false })
-    });
+        httpStatus = 200;
+    } else if (resultado.aprovadas.length < 30) {
+        resultado.aprovadas.push(solicitacao)
+        httpStatus = 200;
+    } else {
+        resultado.pendentes.push(solicitacao);
+        httpStatus = 422;
+    }
+    collection.update({ data: body.data, local: 'POLIS' }, resultado, { upsert: true, safe: false })
+
+    res.status(httpStatus).send("");
+
 });
 
 module.exports = router;

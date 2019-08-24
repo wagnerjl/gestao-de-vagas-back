@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon app.js",
+    "startDebug": "node $NODE_DEBUG_OPTION app.js",
     "test": "test"
   },
   "repository": {
