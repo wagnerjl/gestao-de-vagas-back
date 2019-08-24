@@ -1,5 +1,7 @@
 const bodyParser = require('body-parser');
 const express = require("express");
+const https = require('https');
+const fs = require('fs');
 const MongoClient = require("mongodb").MongoClient;
 var cors = require('cors');
 
@@ -26,7 +28,10 @@ app.use('/', solicitacao);
 app.use('/', veiculo);
 app.use('/', checkin);
 
-app.listen(3001, () => {
+https.createServer({
+    key: fs.readFileSync('server.key'),
+    cert: fs.readFileSync('server.cert')
+  }, app).listen(3001, () => {
         client.connect();
     }
 );
