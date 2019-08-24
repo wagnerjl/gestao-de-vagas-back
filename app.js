@@ -8,7 +8,7 @@ const veiculo = require('./routes/veiculo');
 const solicitacao = require('./routes/solicitacao');
 
 const app = express();
-const client = new MongoClient('mongodb://localhost:27017', { useNewUrlParser: true });
+client = new MongoClient('mongodb://localhost:27017', { useNewUrlParser: true });
 
 const listEndpoints = require('express-list-endpoints')
 
@@ -30,5 +30,3 @@ app.listen(3001, () => {
 );
 
 console.log(listEndpoints(app));
-
-module.exports = client;

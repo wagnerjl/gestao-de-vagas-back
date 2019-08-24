@@ -1,10 +1,8 @@
 var express = require("express");
 var router = express.Router();
-const mongoClient = require('../app.js');
-
 
 router.post('/usuario/:login/solicitacao', async (req, res) => {
-    const db = mongoClient.db('loki');
+    const db = client.db('loki');
     const collection = db.collection('vagas');
     const usuario = req.params.login;
     var success = true;
