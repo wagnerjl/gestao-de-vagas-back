@@ -1,6 +1,8 @@
 const bodyParser = require('body-parser');
 const express = require("express");
 const MongoClient = require("mongodb").MongoClient;
+var cors = require('cors');
+
 
 const veiculo = require('./routes/veiculo');
 const solicitacao = require('./routes/solicitacao');
@@ -12,6 +14,8 @@ const listEndpoints = require('express-list-endpoints')
 
 
 app.use(bodyParser.json());
+
+app.use(cors());
 
 app.use((req, res, next) => {
     next();
