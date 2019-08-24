@@ -1,0 +1,27 @@
+{
+  "name": "gestao-de-vagas-back",
+  "version": "1.0.0",
+  "description": "Hackthor equipe loki",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wagnerjl/gestao-de-vagas-back.git"
+  },
+  "author": "loki",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wagnerjl/gestao-de-vagas-back/issues"
+  },
+  "homepage": "https://github.com/wagnerjl/gestao-de-vagas-back#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongodb": "^3.3.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  }
+}
