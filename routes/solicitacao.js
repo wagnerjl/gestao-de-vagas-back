@@ -26,12 +26,20 @@ router.post('/usuario/:login/solicitacao', async (req, res) => {
         }
         httpStatus = 200;
     } else if (resultado.aprovadas.length < 30) {
-        resultado.aprovadas.push(solicitacao)
-        httpStatus = 200;
+        var ja_existe = await collection.findOne({ data: body.data, local: 'POLIS', "aprovadas": { $elemMatch: { "veiculo.placa": body.veiculo.placa }}});
+        if (ja_existe) {
+            httpStatus = 409;
+        } else {
+            resultado.aprovadas.push(solicitacao)
+            httpStatus = 200;
+        }
+
     } else {
         resultado.pendentes.push(solicitacao);
         httpStatus = 422;
     }
+
+
     collection.update({ data: body.data, local: 'POLIS' }, resultado, { upsert: true, safe: false })
 
     res.status(httpStatus).send("");
